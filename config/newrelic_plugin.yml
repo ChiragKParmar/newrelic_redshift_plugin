@@ -6,7 +6,7 @@ newrelic:
   #
   # Update with your New Relic account license key:
   #
-  license_key: '101010101010'
+  license_key: 'YOUR_LICENSE_KEY_HERE'
 
   #Set the polling cycle (unit in seconds)
   poll: 60
