@@ -80,7 +80,11 @@ Please read [Newrelic's note on time periods for metrics](https://docs.newrelic.
 ## Contributing
 
 Pull requests welcome!
-
+1. Fork it ( https://github.com/ChiragKParmar/newrelic_redshift_plugin/fork )
+2. Create your feature branch (git checkout -b my-new-feature)
+3. Commit your changes (git commit -am 'Add some feature')
+4. Push to the branch (git push origin my-new-feature)
+5. Create a new Pull Request
 
 ----
 ## More Metrics Coming Soon!!!
