@@ -50,3 +50,4 @@ agents:
         - Leader
         - Compute-0
         - Compute-1
+#       - Compute-N where N=0,1,2,..
