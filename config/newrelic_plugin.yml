@@ -16,6 +16,20 @@ newrelic:
   #
   # verbose: 1
 #
+# AWS configuration.
+#
+aws:
+  # Update with you AWS account keys:
+  access_key: 'YOUR_AWS_ACCESS_KEY_HERE'
+  secret_key: 'YOUR_AWS_SECRET_KEY_HERE'
+
+  # AWS regions to query for metrics
+  # regions:
+  #  -
+  #   us-east-1
+  #  -
+  #   us-east-2
+
 # Agent Configuration:
 #
 agents:
@@ -28,3 +42,11 @@ agents:
     dbname: 'REDSHIFT_DATABASE_NAME'
     label: 'Redshift' # This label is optional and will default to the server hostname - it shows up in the NewRelic Web UI
     schema: 'production' #Redshift schema name you want the metrics for
+    aws_cloudwatch:
+      enabled: true
+      cluster_identifiers:
+        - db1
+      node_id:
+        - Leader
+        - Compute-0
+        - Compute-1
