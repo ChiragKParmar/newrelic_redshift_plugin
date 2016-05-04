@@ -59,6 +59,15 @@ host also needs Ruby (tested with 2.2.0), and support for rubygems.
 ##Source Code
 This plugin can be found at [here](https://github.com/ChiragKParmar/newrelic_redshift_plugin/)
 
+## Screenshots
+
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/1.png)
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/2.png)
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/3.png)
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/4.png)
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/5.png)
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/6.png)
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/7.png)
 
 ## Support
 
