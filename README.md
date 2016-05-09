@@ -105,8 +105,6 @@ Using AWS Cloudwatch
 3. ReadIOPS
 4. ReadLatency
 5. ReadThroughput
-6. WriteIOPS
-7. WriteLatency
-8. WriteThroughput
-
-
+5. WriteIOPS
+6. WriteLatency
+7. WriteThroughput
