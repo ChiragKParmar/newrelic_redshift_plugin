@@ -99,4 +99,14 @@ Pull requests welcome!
 ----
 ## More Metrics Coming Soon!!!
 
+Using AWS Cloudwatch
+1. NetworkReceiveThroughput
+2. NetworkTransmitThroughput
+3. ReadIOPS
+4. ReadLatency
+5. ReadThroughput
+6. WriteIOPS
+7. WriteLatency
+8. WriteThroughput
+
 
