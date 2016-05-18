@@ -59,6 +59,15 @@ host also needs Ruby (tested with 2.2.0), and support for rubygems.
 ##Source Code
 This plugin can be found at [here](https://github.com/ChiragKParmar/newrelic_redshift_plugin/)
 
+## Screenshots
+
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/1.png)
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/2.png)
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/3.png)
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/4.png)
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/5.png)
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/6.png)
+![img] (https://github.com/ChiragKParmar/newrelic_redshift_plugin/blob/master/screenshots/7.png)
 
 ## Support
 
@@ -80,6 +89,7 @@ Please read [Newrelic's note on time periods for metrics](https://docs.newrelic.
 ## Contributing
 
 Pull requests welcome!
+
 1. Fork it ( https://github.com/ChiragKParmar/newrelic_redshift_plugin/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
@@ -89,4 +99,13 @@ Pull requests welcome!
 ----
 ## More Metrics Coming Soon!!!
 
+Using AWS Cloudwatch
 
+1. NetworkReceiveThroughput
+2. NetworkTransmitThroughput
+3. ReadIOPS
+4. ReadLatency
+5. ReadThroughput
+5. WriteIOPS
+6. WriteLatency
+7. WriteThroughput
