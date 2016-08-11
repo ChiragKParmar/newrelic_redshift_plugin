@@ -7,16 +7,16 @@ A NewRelic Redshift Plugin
 The New Relic Redshift Plugin enables integrated monitoring of your Redshift database in a custom NewRelic dashboard. Currently the following metrics are recorded:
 
 * Database Memory Statistics 
-	-Total Disk Space
-	-Free Space
-	-Percentage Utilized
+ - Total Disk Space
+ - Free Space
+ - Percentage Utilized
 * Table Statistics
-	-Total Rows Per Table
-	-Sorted Rows Per Table
-	-Unsorted Rows Per Table
-	-Percentage of Unsorted Region Per Table
-	-Size of Table in Proportion to the Cluster Size
-	-Staleness of the Table Stats (real size vs size recorded in stats)
+ - Total Rows Per Table
+ - Sorted Rows Per Table
+ - Unsorted Rows Per Table
+ - Percentage of Unsorted Region Per Table
+ - Size of Table in Proportion to the Cluster Size
+ - Staleness of the Table Stats (real size vs size recorded in stats)
 
 More metrics coming! 
 
