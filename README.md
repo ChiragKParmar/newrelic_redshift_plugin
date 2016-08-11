@@ -33,21 +33,22 @@ host also needs Ruby (tested with 2.2.0), and support for rubygems.
 
 ## Installation and Running
 
-1. 
-	a. 	1. Install this gem from RubyGems:
-      ```gem install newrelic_redshift_plugin```
-		2. Create an installation directory (like /opt/newrelic/redshift ).
-
-	b. 	1. Download the latest newrelic_redshift_plugin-X.Y.Z.tar.gz from [the tag list](https://github.com/ChiragKParmar/newrelic_redshift_plugin/tags)
-		2. Extract the downloaded archive to the location you want to run the Redshift agent from
-		3. Run bundle install to install required gems
+1.  
+    * Option 1
+        1. Install this gem from RubyGems:
+         ```gem install newrelic_redshift_plugin```
+        2. Create an installation directory (e.g. /opt/newrelic/redshift ).
+    * Option 2
+        1. Download the latest newrelic_redshift_plugin-X.Y.Z.tar.gz from [the tag list](https://github.com/ChiragKParmar/newrelic_redshift_plugin/tags)
+        2. Extract the downloaded archive to the location you want to run the Redshift agent from
+        3. Run bundle install to install required gems
 
 2. In the installation directory, execute
 
       ```./bin/redshift_plugin install -l LICENSE_KEY```
 
    using the license key from your New Relic account.
-3. Edit the `config/newrelic_plugin.yml` file generated in step 4. Setup host/port/user/password/dbname/schema for your redshift connection.
+3. Edit the `config/newrelic_plugin.yml` file generated in step 2. Setup host/port/user/password/dbname/schema for your redshift connection.
 4. Execute
 
       ```./bin/redshift_plugin run```
