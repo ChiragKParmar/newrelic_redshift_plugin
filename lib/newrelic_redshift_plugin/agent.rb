@@ -44,7 +44,7 @@ module NewRelic::RedshiftPlugin
     end
 
     #
-    # Fallowing is called for every polling cycle
+    # Following is called for every polling cycle
     #
     def poll_cycle
       @connection = self.connect
