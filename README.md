@@ -37,7 +37,6 @@ host also needs Ruby (tested with 2.2.0), and support for rubygems.
     * Option 1
         1. Install this gem from RubyGems:
          ```gem install newrelic_redshift_plugin```
-        2. Create an installation directory (e.g. /opt/newrelic/redshift ).
     * Option 2
         1. Download the latest newrelic_redshift_plugin-X.Y.Z.tar.gz from [the tag list](https://github.com/ChiragKParmar/newrelic_redshift_plugin/tags)
         2. Extract the downloaded archive to the location you want to run the Redshift agent from
