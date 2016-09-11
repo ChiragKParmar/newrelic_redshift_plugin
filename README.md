@@ -2,7 +2,7 @@ NewRelic Redshift Plugin
 ========================
 
 
-A NewRelic Redshift Plugin
+NewRelic Redshift Plugin
 
 The New Relic Redshift Plugin enables integrated monitoring of your Redshift database in a custom NewRelic dashboard. Currently the following metrics are recorded:
 
