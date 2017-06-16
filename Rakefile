@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'rake'
 require 'date'
+require 'aws-sdk'
 
 # https://raw.github.com/mojombo/rakegem
 

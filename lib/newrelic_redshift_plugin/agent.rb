@@ -1,3 +1,5 @@
+require "aws-sdk"
+
 module NewRelic::RedshiftPlugin
 
   # Register and run the agent
@@ -12,10 +14,10 @@ module NewRelic::RedshiftPlugin
 
   class Agent < NewRelic::Plugin::Agent::Base
 
-    agent_guid    'com.chirag.nr.redshift'
+    agent_guid    'com.jasonmcintosh.nr.redshift'
     agent_version NewRelic::RedshiftPlugin::VERSION
-    agent_config_options :host, :port, :user, :password, :dbname, :label, :schema
-    agent_human_labels('Redshift') { "#{label || host}" }
+    agent_config_options :host, :port, :user, :password, :dbname, :label, :schema, :access_key, :secret_key, :region, :cluster, :metric_range
+    agent_human_labels('AWS Redshift') { "#{label || host}" }
 
     def initialize(*args)
       @previous_metrics = {}
@@ -43,23 +45,46 @@ module NewRelic::RedshiftPlugin
       PG::Connection.new(:host => host, :port => port, :user => user, :password => password, :dbname => dbname)
     end
 
+    def aws_connect
+    end
+
     #
     # Following is called for every polling cycle
     #
     def poll_cycle
+      puts "Connecting to #{region} using access key #{access_key}"
+      @cw = Aws::CloudWatch::Client.new(region: region || 'us-east-1', access_key_id: access_key, secret_access_key: secret_key) if !access_key.nil?
       @connection = self.connect
       puts 'Connected'
       report_metrics
 
-    rescue => e
-      $stderr.puts "#{e}: #{e.backtrace.join("\n  ")}"
-    ensure
-      @connection.finish if @connection
+      rescue => e
+        $stderr.puts "#{e}: #{e.backtrace.join("\n  ")}"
+      ensure
+        @connection.finish if @connection
     end
 
     def report_metrics
+      if !access_key.nil?  
+          cpu_use = cloudwatch_metric("CPUUtilization", "Average", "Percent")
+          puts "Reporting on cluster health... cpu use currently #{cpu_use}"
+
+          report_metric "Cluster/Health/CPUUtilization", "%", cpu_use if cpu_use
+          report_metric "Cluster/Health/DiskUtilization", "%", cloudwatch_metric("PercentageDiskSpaceUsed", "Average", "Percent")
+          report_metric "Cluster/Network/NetworkReceiveThroughput", "Bytes/Second", cloudwatch_metric("NetworkReceiveThroughput", "Average", "Bytes/Second")
+          report_metric "Cluster/Network/NetworkTransmitThroughput", "Bytes/second", cloudwatch_metric("NetworkTransmitThroughput", "Average", "Bytes/Second")
+          report_metric "Cluster/Latency/ReadLatency", "Seconds", cloudwatch_metric("ReadLatency", "Average", "Seconds")
+          report_metric "Cluster/Latency/WriteLatency", "Seconds", cloudwatch_metric("WriteLatency", "Average", "Seconds")
+          report_metric "Cluster/Throughput/ReadThroughput", "Bytes/Second", cloudwatch_metric("ReadThroughput", "Average", "Bytes/Second")
+          report_metric "Cluster/Throughput/WriteThroughput", "Bytes/Second", cloudwatch_metric("WriteThroughput", "Average", "Bytes/Second")
+
+          report_metric "Cluster/Connections", "Count", cloudwatch_metric("DatabaseConnections", "Average", "Count")
+          ## HealthStatus comes back as 1 when healthy, 0 when unhealthy.  NewRelic is designed to search for increasing metrics (e.g. 0 is good, 1 is bad) so it's the exact opposite.  
+          report_metric "Cluster/Health", "Problems", (-1 * cloudwatch_metric("HealthStatus", "Minimum", "Count") + 1)
+      end
+
       @connection.exec(percentage_memory_utilization) do |result|
-        report_metric "Database/Memory/PercentageUtilized", '%' , result[0]['percentage_used']
+        report_metric "Cluster/Health/MemoryUtilization", '%' , result[0]['percentage_used']
       end
 
       @connection.exec(memory_used) do |result|
@@ -70,23 +95,10 @@ module NewRelic::RedshiftPlugin
         report_metric "Database/Memory/MaxCapacity", 'Gbytes' , result[0]['capacity_gbytes']
       end
 
-      @connection.exec(database_connections) do |result|
-        report_metric "Database/Connections/NumberOfConnections", 'count' , result[0]['database_connections']
-      end
-
       @connection.exec(total_rows_unsorted_rows_per_table).each do |result|
         report_metric "TableStats/TotalRows/#{result["table_name"]}", 'count' , result['total_rows']
-      end
-
-      @connection.exec(total_rows_unsorted_rows_per_table).each do |result|
         report_metric "TableStats/SortedRows/#{result["table_name"]}", 'count' , result['sorted_rows']
-      end
-
-      @connection.exec(total_rows_unsorted_rows_per_table).each do |result|
         report_metric "TableStats/UnsortedRows/#{result["table_name"]}", 'count' , result['unsorted_rows']
-      end
-
-      @connection.exec(total_rows_unsorted_rows_per_table).each do |result|
         report_metric "TableStats/UnsortedRatio/#{result["table_name"]}", '%' , result['unsorted_ratio']
       end
 
@@ -99,7 +111,30 @@ module NewRelic::RedshiftPlugin
       @connection.exec(table_storage_information).each do |result|
         report_metric "TableStats/SizeStaleness/#{result["table_name"]}", '%' , result['pct_stats_off']
       end
+    end
 
+
+
+    def cloudwatch_metric(metric_name, statistics, unit)
+        results = @cw.get_metric_statistics({
+            namespace: "AWS/Redshift", # required
+            metric_name: metric_name, # required
+            dimensions: [
+              {
+                name: "ClusterIdentifier", # required
+                value: cluster, # required
+              },
+            ],
+            start_time: Time.now - (@metric_range || 120), # required
+            end_time: Time.now, # required
+            period: (@metric_range || 120), # required
+            statistics: [statistics], # accepts SampleCount, Average, Sum, Minimum, Maximum
+            unit: unit,
+          })
+        if results['datapoints'].any?
+          return results['datapoints'][0][statistics.downcase]
+        end
+        return nil
     end
 
     private
