@@ -53,7 +53,11 @@ module NewRelic::RedshiftPlugin
     #
     def poll_cycle
       puts "Connecting to #{region} using access key #{access_key}"
-      @cw = Aws::CloudWatch::Client.new(region: region || 'us-east-1', access_key_id: access_key, secret_access_key: secret_key) if !access_key.nil?
+      if !access_key.nil?
+        @cw = Aws::CloudWatch::Client.new(region: region || 'us-east-1', access_key_id: access_key, secret_access_key: secret_key) 
+      else
+        @cw = Aws::CloudWatch::Client.new(region: region || 'us-east-1') 
+      end
       @connection = self.connect
       puts 'Connected'
       report_metrics
