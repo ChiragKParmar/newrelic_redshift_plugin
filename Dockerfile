@@ -1,4 +1,4 @@
-FROM ruby:2.2
+FROM ruby:2.1
 RUN mkdir /usr/src/app 
 ADD . /usr/src/app/ 
 WORKDIR /usr/src/app/ 
