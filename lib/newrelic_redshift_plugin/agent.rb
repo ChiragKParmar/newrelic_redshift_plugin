@@ -50,7 +50,7 @@ module NewRelic::RedshiftPlugin
     #
     def poll_cycle
       begin
-        if !access_key.nil?
+        if !access_key.empty?
           puts "Connecting to #{region} using access key #{access_key}"
           @cw = Aws::CloudWatch::Client.new(region: region || 'us-east-1', access_key_id: access_key, secret_access_key: secret_key) 
         else
