@@ -1,0 +1,36 @@
+# Please make sure to update the license_key information with the license key for your New Relic
+# account.
+#
+#
+newrelic:
+  #
+  # Update with your New Relic account license key:
+  #
+  license_key: '<%= ENV['NEWRELIC_KEY'] %>'
+
+  #Set the polling cycle (unit in seconds)
+  poll: 60
+  #
+  # Set to '1' for verbose output, remove for normal output.
+  # All output goes to stdout/stderr.
+  #
+  # verbose: 1
+#
+# Agent Configuration:
+#
+agents:
+  # this is where configuration for agents belongs
+  redshift:
+    host:  '<%= ENV['RS_HOST'] %>'
+    port: 5439
+    user: '<%= ENV['RS_USER'] %>'
+    password: '<%= ENV['RS_PASSWORD'] %>'
+    dbname: '<%= ENV['RS_DBNAME'] %>'
+    label: '<%= ENV['RS_LABEL'] %>' # This label is optional and will default to the server hostname - it shows up in the NewRelic Web UI
+    schema: '<%= ENV['RS_SCHEMA'] %>' #Redshift schema name you want the metrics for
+    ##Cloudwatch metrics
+    access_key: '<%= ENV['ACCESS_KEY'] %>' #Redshift schema name you want the metrics for
+    secret_key: '<%= ENV['SECRET_KEY'] %>' #Redshift schema name you want the metrics for
+    region: '<%= ENV['region'] %>' #Redshift schema name you want the metrics for
+    cluster: '<%= ENV['cluster'] %>' #Redshift schema name you want the metrics for
+    metric_range: <%= ENV['metric_range'] %> # Time for the statics - e.g. 120 second interval (so would be average of CPU over 120 seconds for last 120 seconds)
